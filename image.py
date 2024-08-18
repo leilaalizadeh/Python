@@ -11,7 +11,7 @@ from matplotlib import image
 import matplotlib.pyplot as plt
 import numpy as np
 
-img = image.imread('/content/flower.jpg')
+img = image.imread('/images/flower.jpg')
 print(img)
 
 print(type(img))
