@@ -28,14 +28,26 @@ print(a)
 
 # 2_D array
 a = np.array([[1,2,3],[4,5,6]])
-print(a)
+print(a,a.size,a.shape,a.ndim,a.dtype)
+
+a = np.array([1,2,3], dtype= np.float64)
+a
+
+b = np.array(a) #as a copy of another array
+b
 
 # Creating an array filled with zeros
 a = np.zeros(5)
 print(a)
 
+a = np.zeros((2,3), dtype=np.int64)
+print(a)
+
 # Creating an array filled with ones
 a = np.ones(5)
+print(a)
+
+a = np.ones((2,3))
 print(a)
 
 # Creating an array of random values (shown as 2x3 matrix)
@@ -43,7 +55,7 @@ a = np.random.random((2,3))
 print(a)
 
 # Creating an array filled with given value (dimensions, value)
-a = np.full(3,10)
+a = np.full(3,10) #(1,3)
 print(a)
 a = np.full((2,3),10)
 print(a)
@@ -57,6 +69,19 @@ print(a)
 # Creating an array of evenly spaced values (start, stop, step)
 # no include stop value
 a = np.arange(1,10,1)
+print(a)
+
+a = np.arange(3)
+print(a)
+
+#eye is a function used to create a 2D identity matrix or a matrix with ones on a specified diagonal and zeros elsewhere.
+a = np.eye(3)
+print(a)
+
+a = np.eye(3,3,1)
+print(a)
+
+a = np.eye(3,3,-1)
 print(a)
 
 # Creating an array of evenly spaced values (low, high, num-values)
@@ -154,10 +179,19 @@ print(a)
 a = my_2d_array[0][1]
 print(a)
 
+x =np.array([[1,2],[3,4],[5,6]])
+y = np .array([[1,2,3],[4,5,6]])
+np.dot(x,y)
+
 # Re-shape (here to 3 rows & 2 columns)
 a = my_2d_array.reshape(3,2)
 print(my_2d_array)
 print(a)
+
+x = np.arange(12).reshape((2,2,3)) #2 blocks each block (2,3)
+x
+
+x.ravel()
 
 # Re-shape (here to a 1-Dimensional array)
 a = my_2d_array.flatten()
@@ -209,6 +243,12 @@ print(a)
 
 a = np.array_equal(a,b)
 print(a)
+
+x = np.arange(3).reshape((3,1))
+
+y=x.T
+
+print(x,y)
 
 # Horizontal Stack
 # hstack concatenates arrays along axis 1
@@ -420,3 +460,106 @@ print()
 #load file
 #np.load('filename.py')
 
+s =0
+N= 10000000
+x = np.arange(N)
+for i in x:
+  s += i
+
+#3s
+
+N= 10000000
+x = np.arange(N)
+
+s = x.sum()
+#0.127s
+
+x = np.arange(5)
+print(x,"--->",x[1:3],x[::2],x[3])
+
+x = np.arange(15).reshape(3,5)
+print(x, "------", x[1,0:3], x[0:2, 0:2])
+
+idx = np.array([0,0,2])
+print(idx)
+
+print(x[idx,:]) #x[[0,0,2], :] [row 0, row 0, row 2]
+
+#x[:, [0,0,2]] [column 0, column 0, column 2]
+x[:,idx]
+
+#x[0,0] x[0,0] x[2,2]
+x[idx,idx]
+
+x[idx,:][:,idx]
+
+idx = np.array([0,2])
+jdx = np.array([1,3])
+
+#extract all rows in idx and all columns in jdx
+#first way
+
+x[idx,:][:,jdx]
+
+#second way
+x[np.ix_(idx,jdx)]
+
+x[idx.reshape((2,1)),jdx.reshape((1,2))]
+
+xMask = x>5
+print(xMask)
+
+x[xMask]
+
+z = np.array([1,0,1], dtype =np.bool)
+z
+
+x[z]
+
+x = np.zeros(6)
+x
+
+x[::2] = 3 #select every second element, starting from index 0
+x
+
+x[np.array([True, False, True, True, True, False], dtype = np.bool)] = np.arange(4)
+x
+#[0,2,3,4]
+
+x = np.arange(5)
+y = x[0:3]
+y[:] = 3
+print(x)
+
+x = np.arange(5)
+x.flags.owndata
+
+y = x[0:3]
+y.flags.owndata
+
+x = np.zeros((3,4))
+m = np.arange(4) #m is brodcasted to a shape(1,4) and then replicated along axis 0
+print(x+m)
+
+x = np.zeros((3,4))
+m = np.arange(4).reshape((1,4))
+x + m
+
+x = np.zeros((3,4))
+m = np.arange(3).reshape((3,1))
+x + m
+
+x1 = np.array([[1,2,3]])
+x2 = np.array([[4,5,6]])
+print(x1,x2)
+
+np.hstack([x1,x2]) #concatenates arrays along axis 1
+
+np.vstack([x1,x2]) #concatenates arrays along axis 0
+
+np.concatenate([x1,x2],axis=1) #hstack
+
+np.concatenate([x1,x2],axis=0) #vstack
+
+x = np.arange(9).reshape(3,3)
+np.linalg.eig(x)
